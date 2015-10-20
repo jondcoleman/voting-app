@@ -186,3 +186,32 @@ span {
     display: inline;
     margin: 0;
 }
+
+/****** Voting App Styling ******/
+.pollForm {
+  width:500px;
+  margin:0 auto;
+}
+
+.input-option {
+  margin-top:10px;
+}
+
+.input-field {
+  width:100%;
+}
+
+.poll-buttons {
+  margin-top:10px;
+  width:100px;
+}
+
+.poll-buttons {
+  margin:0 auto;
+  display:block;
+  margin-top:10px;
+}
+
+.poll-title {
+  text-align:center;
+}

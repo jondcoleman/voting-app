@@ -34,7 +34,7 @@ var PollOptions = React.createClass({
     render: function() {
         var options = this.props.data.map(function(option){
           return (
-              <div className="poll-option" key={option._id}>{option.optionName}</div>
+              <div className="poll-option" key={option._id}>{option.optionName}: {option.votes} votes</div>
             )
         })
         return (

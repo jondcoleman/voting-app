@@ -1,40 +1,76 @@
 'use strict';
 
-var options = [];
-var initialize = function(){
-    options = [1,2];
-};
-initialize();
-
-// tutorial1.js
 var PollForm = React.createClass({
-  render: function() {
-    return (
-      <form action="" className="pollForm" id="pollForm">
-        <div className="poll-title">
-            <h4>Poll Name</h4>
-        </div>
-        <div>
-          <input type="text" name="PollName" className="input-field" placeholder="Poll Name" />
-        </div>
-        <div>
-          <h4 className="poll-title">Options</h4>
-        </div>
-        <div id="options">
-          <PollOption />
-        </div>
-        <div id="addOption" className="btn btn-primary poll-buttons">Add Option</div>
-        <div>
-          <input type="submit" value="Submit" className="btn btn-success poll-buttons" />
-        </div>
-      </form>
-    );
-  }
+    getInitialState: function() {
+        return {data: [1,2]};
+    },
+    render: function() {
+        return (
+          <form action="" className="pollForm" id="pollForm" onSubmit={this.handleSubmit} >
+            <div className="poll-title">
+                <h4>Poll Name</h4>
+            </div>
+            <div>
+              <input type="text" name="PollName" id="pollName" className="input-field" placeholder="What is your favorite FCC Bonfire?" />
+            </div>
+            <div>
+              <h4 className="poll-title">Options</h4>
+            </div>
+            <div id="options">
+              <PollOption data={this.state.data}/>
+            </div>
+            <div id="addOption" className="btn btn-primary poll-buttons" onClick={this.handleClick}>Add Option</div>
+            <div>
+              <input type="submit" value="Post" className="btn btn-success poll-buttons" />
+            </div>
+            <div id='validation-msg'></div>
+            <div id='success-msg' hidden>Poll Created - View your polls on <a href="/my-polls">My Polls</a></div>
+          </form>
+        );
+    },
+    handleClick: function(){
+        this.state.data.push(this.state.data.length + 1);
+        this.setState({data:this.state.data});
+    },
+    handleSubmit: function(e){
+        e.preventDefault();
+        
+        var validation = $('#validation-msg');
+        var success = $('#success-msg');
+        var name = $('#pollName');
+        var formOptions = $('.input-option');
+        
+        validation.text('');
+        success.hide();
+        
+        //validation
+        if (name[0].value == '') {
+            validation.text("Title Is Required")
+            return;
+        }
+        if (formOptions[0].value == '' || formOptions[1].value == '') {
+            validation.text("Options 1 & 2 are Required at a Minimum")
+            return;
+        }
+        
+        //success
+        var data = $("#pollForm input").filter(function () {
+            return !!this.value;
+        });
+        $.post('https://basejump2-jondcoleman.c9.io/api/polls', data.serialize());
+        success.show();
+        
+        //reset
+        this.setState(this.getInitialState());
+        document.getElementById('pollForm').reset()
+        
+    }
 });
 
 var PollOption = React.createClass({
+    
     render: function() {
-        var optionDivs = options.map(function(option){
+        var optionDivs = this.props.data.map(function(option){
             var optionPlaceholder = "Option " + option.toString();
             return (
                     <div key={option}>
@@ -54,36 +90,3 @@ ReactDOM.render(
   <PollForm />,
   document.getElementById('content')
 );
-
-
-$(document).ready(function(){
-    
-    $('#addOption').click(function(){
-        options.push(options.length + 1);
-        console.log(options);
-        ReactDOM.render(
-            <PollForm />,
-            document.getElementById('content')
-        );
-    })
-    
-    $('.pollForm').on("submit", function(event){
-        event.preventDefault();
-        //$('input:text[value=""]', '#pollForm').remove();
-        //var data = $("#pollForm :input[value!='']").serialize();
-        //var data = $(this).serialize();
-        var data = $("#pollForm input").filter(function () {
-            return !!this.value;
-        }).serialize();
-        console.log(data);
-        $.post('https://basejump2-jondcoleman.c9.io/api/polls', data);
-        this.reset();
-        initialize();
-        ReactDOM.render(
-            <PollForm />,
-            document.getElementById('content')
-        );
-    })
-    
-    
-})

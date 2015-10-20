@@ -164,9 +164,9 @@ img {
     font-weight: 400;
 }
 
-span {
-    font-weight: 500;
-}
+/*span {*/
+/*    font-weight: 500;*/
+/*}*/
 
 .github-profile > img {
     padding-top: 16px;
@@ -212,6 +212,30 @@ span {
   margin-top:10px;
 }
 
+.poll-detail {
+    border:solid;
+    margin:10px;
+    margin-bottom:0px;
+    text-align:left;
+}
+
 .poll-title {
   text-align:center;
+  font-weight: 500;
+}
+
+
+.poll-detail .poll-title {
+    text-align:left;
+}
+
+#validation-msg {
+    padding-top: 10px;
+    color:red;
+    text-align: center;
+}
+
+#success-msg {
+    padding-top: 10px;
+    text-align: center;
 }

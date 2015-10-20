@@ -5,7 +5,6 @@ var Poll = require('../models/polls.js');
 
 function PollHandler () {
     this.addPoll = function (req, res) {
-        console.log(req.body);
         var newPoll = new Poll();
         newPoll.pollName = req.body.PollName;
         newPoll.userId = req.user._id;

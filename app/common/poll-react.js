@@ -1,31 +1,31 @@
 'use strict';
 
-var PollForm = React.createClass({
+var PollForm = React.createClass({displayName: "PollForm",
     getInitialState: function() {
         return {data: [1,2]};
     },
     render: function() {
         return (
-          <form action="" className="pollForm" id="pollForm" onSubmit={this.handleSubmit} >
-            <div className="poll-title">
-                <h4>Poll Name</h4>
-            </div>
-            <div>
-              <input type="text" name="PollName" id="pollName" className="input-field" placeholder="What is your favorite FCC Bonfire?" />
-            </div>
-            <div>
-              <h4 className="poll-title">Options</h4>
-            </div>
-            <div id="options">
-              <PollOption data={this.state.data}/>
-            </div>
-            <div id="addOption" className="btn btn-primary poll-buttons" onClick={this.handleClick}>Add Option</div>
-            <div>
-              <input type="submit" value="Post" className="btn btn-success poll-buttons" />
-            </div>
-            <div id='validation-msg'></div>
-            <div id='success-msg' hidden>Poll Created - View your polls on <a href="/my-polls">My Polls</a></div>
-          </form>
+          React.createElement("form", {action: "", className: "pollForm", id: "pollForm", onSubmit: this.handleSubmit}, 
+            React.createElement("div", {className: "poll-title"}, 
+                React.createElement("h4", null, "Poll Name")
+            ), 
+            React.createElement("div", null, 
+              React.createElement("input", {type: "text", name: "PollName", id: "pollName", className: "input-field", placeholder: "What is your favorite FCC Bonfire?"})
+            ), 
+            React.createElement("div", null, 
+              React.createElement("h4", {className: "poll-title"}, "Options")
+            ), 
+            React.createElement("div", {id: "options"}, 
+              React.createElement(PollOption, {data: this.state.data})
+            ), 
+            React.createElement("div", {id: "addOption", className: "btn btn-primary poll-buttons", onClick: this.handleClick}, "Add Option"), 
+            React.createElement("div", null, 
+              React.createElement("input", {type: "submit", value: "Post", className: "btn btn-success poll-buttons"})
+            ), 
+            React.createElement("div", {id: "validation-msg"}), 
+            React.createElement("div", {id: "success-msg", hidden: true}, "Poll Created - View your polls on ", React.createElement("a", {href: "/my-polls"}, "My Polls"))
+          )
         );
     },
     handleClick: function(){
@@ -67,26 +67,26 @@ var PollForm = React.createClass({
     }
 });
 
-var PollOption = React.createClass({
+var PollOption = React.createClass({displayName: "PollOption",
     
     render: function() {
         var optionDivs = this.props.data.map(function(option){
             var optionPlaceholder = "Option " + option.toString();
             return (
-                    <div key={option}>
-                        <input type="text" name="option" className="input-field input-option" placeholder={optionPlaceholder}/>
-                    </div>
+                    React.createElement("div", {key: option}, 
+                        React.createElement("input", {type: "text", name: "option", className: "input-field input-option", placeholder: optionPlaceholder})
+                    )
             )
         })
         return (
-            <div>
-                {optionDivs}
-            </div>
+            React.createElement("div", null, 
+                optionDivs
+            )
             )
     }
 })
 
 ReactDOM.render(
-  <PollForm />,
+  React.createElement(PollForm, null),
   document.getElementById('content')
 );

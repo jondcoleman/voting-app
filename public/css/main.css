@@ -99,36 +99,36 @@ img {
 /****** Click Styling ******/
 
 .btn-container {    /* Styling for the div that contains the buttons */
-    margin: -10px auto 0 auto;
-    text-align: center;
+    /*margin: -10px auto 0 auto;*/
+    /*text-align: center;*/
 }
 
 .btn {  /* Styling for buttons */
-    margin: 0 8px;
-    color: white;
-    background-color: #00BCD4;
-    display: inline-block;
-    border: 0;
-    font-size: 14px;
-    border-radius: 3px;
-    padding: 10px 5px;
-    width: 100px;
-    font-weight: 500;
+    /*margin: 0 8px;*/
+    /*color: white;*/
+    /*background-color: #00BCD4;*/
+    /*display: inline-block;*/
+    /*border: 0;*/
+    /*font-size: 14px;*/
+    /*border-radius: 3px;*/
+    /*padding: 10px 5px;*/
+    /*width: 100px;*/
+    /*font-weight: 500;*/
 }
 
 .btn:focus {    /* Remove outline when hovering over button */
-    outline: none;
+    /*outline: none;*/
 }
 
 .btn:active {   /* Scale the button down by 10% when clicking on button */
-    transform: scale(0.9, 0.9);
-    -webkit-transform: scale(0.9, 0.9);
-    -moz-transform: scale(0.9, 0.9);
+    /*transform: scale(0.9, 0.9);*/
+    /*-webkit-transform: scale(0.9, 0.9);*/
+    /*-moz-transform: scale(0.9, 0.9);*/
 }
 
 .btn-delete {   /* Styling for delete button */
-    background-color: #ECEFF1;
-    color: #212121;
+    /*background-color: #ECEFF1;*/
+    /*color: #212121;*/
 }
 
 #click-nbr {
@@ -201,33 +201,33 @@ img {
   width:100%;
 }
 
-.poll-buttons {
-  margin-top:10px;
-  width:100px;
-}
+/*.poll-buttons {*/
+/*  margin-top:10px;*/
+/*  width:100px;*/
+/*}*/
 
-.poll-buttons {
-  margin:0 auto;
-  display:block;
-  margin-top:10px;
-}
+/*.poll-buttons {*/
+/*  margin:0 auto;*/
+/*  display:block;*/
+/*  margin-top:10px;*/
+/*}*/
 
-.poll-detail {
-    border:solid;
-    margin:10px;
-    margin-bottom:0px;
-    text-align:left;
-}
+/*.poll-detail {*/
+/*    border:solid;*/
+/*    margin:10px;*/
+/*    margin-bottom:0px;*/
+/*    text-align:left;*/
+/*}*/
 
-.poll-title {
-  text-align:center;
-  font-weight: 500;
-}
+/*.poll-title {*/
+/*  text-align:center;*/
+/*  font-weight: 500;*/
+/*}*/
 
 
-.poll-detail .poll-title {
-    text-align:left;
-}
+/*.poll-detail .poll-title {*/
+/*    text-align:left;*/
+/*}*/
 
 #validation-msg {
     padding-top: 10px;
@@ -238,4 +238,39 @@ img {
 #success-msg {
     padding-top: 10px;
     text-align: center;
+}
+
+body {
+  padding-top: 50px;
+}
+.poll-detail {
+  padding: 40px 15px;
+}
+
+.poll-option {
+  width:100%;
+  padding-top:10px;
+  float:left;
+  font-size:x-large;
+}
+
+.poll-option-name {
+  float:left;
+  width:80%;
+}
+
+.button-cn, .poll-votes-number{
+  padding-right:15px;
+  width:15%;
+  float:left;
+}
+
+.poll-votes-number {
+  color:grey;
+  text-align:right;
+}
+
+.btn-delete-poll {  
+  margin-top:20px;
+  float:right;
 }

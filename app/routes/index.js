@@ -41,12 +41,24 @@ module.exports = function (app, passport) {
         
     app.route('/my-polls')
         .get(isLoggedIn, function (req, res) {
-            res.sendFile(path + '/public/my-polls.html');
+            res.render('my-polls');
         });
         
     app.route('/api/polls')
         .get(isLoggedIn, pollHandler.getPolls)
         .post(isLoggedIn, pollHandler.addPoll);
+        
+    app.route('/api/poll/:id/:option')
+        .put(pollHandler.addVote);
+    
+    app.route('/api/poll/:id')
+        .get(pollHandler.getPoll)
+        .delete(isLoggedIn, pollHandler.deletePoll)
+        
+    app.route('/polls/:id')
+         .get(function(req, res) {
+            res.render('poll', {_id : req.params.id});
+         });
     
     app.route('/api/:id')
         .get(isLoggedIn, function (req, res) {

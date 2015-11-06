@@ -17,7 +17,7 @@
 
       ajaxFunctions.ajaxRequest('POST', apiUrl, function () {
          ajaxFunctions.ajaxRequest('GET', apiUrl, updateClickCount);
-      });
+      });   
 
    }, false);
 

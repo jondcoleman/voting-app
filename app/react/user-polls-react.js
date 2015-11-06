@@ -3,7 +3,7 @@
 var myPollsUrl = appUrl + 'api/polls';
 var pollUrl = appUrl + 'api/poll'
 
-var PollList = React.createClass({displayName: "PollList",
+var PollList = React.createClass({
   loadPollsFromServer: function() {
     $.getJSON(myPollsUrl, function(data){
       this.setState({data: data});
@@ -20,22 +20,22 @@ var PollList = React.createClass({displayName: "PollList",
     var pollDetails = this.state.data.map(function(detail, index){
       var pollUrl = appUrl + 'polls/' + detail._id;
       return (
-        React.createElement("div", {className: "container", key: detail._id}, 
-          React.createElement("div", {className: "row"}, 
-            React.createElement("div", {className: "poll-detail col-md-8 col-md-offset-2"}, 
-              React.createElement("h1", null, React.createElement("a", {href: pollUrl}, detail.pollName)), 
-              React.createElement(PollOptions, {data: detail.options}), 
-              React.createElement("div", {className: "btn btn-danger btn-delete-poll blah", onClick: this.remove.bind(this, detail, index)}, "DELETE POLL")
-            )
-          )
-        )
+        <div className="container" key={detail._id}>
+          <div className="row">
+            <div className="poll-detail col-md-8 col-md-offset-2">
+              <h1><a href={pollUrl}>{detail.pollName}</a></h1>
+              <PollOptions data={detail.options}/>
+              <div className="btn btn-danger btn-delete-poll blah" onClick={this.remove.bind(this, detail, index)}>DELETE POLL</div>
+            </div>
+          </div>
+        </div>
       );
     }, this)
     
     return (
-        React.createElement("div", {className: "poll-list"}, 
-          pollDetails
-        )  
+        <div className="poll-list">
+          {pollDetails}
+        </div>  
       )
   },
   
@@ -61,25 +61,25 @@ var PollList = React.createClass({displayName: "PollList",
   }
 });
 
-var PollOptions = React.createClass({displayName: "PollOptions",
+var PollOptions = React.createClass({
     render: function() {
         var options = this.props.data.map(function(option){
           return (
-              React.createElement("div", {className: "poll-option", key: option._id}, 
-                React.createElement("div", {className: "poll-votes-number"}, option.votes), 
-                React.createElement("div", {className: "poll-option-name"}, option.optionName)
-              )
+              <div className="poll-option" key={option._id}> 
+                <div className="poll-votes-number">{option.votes}</div>
+                <div className="poll-option-name">{option.optionName}</div>
+              </div>
             )
         })
         return (
-            React.createElement("div", {className: "poll-options"}, 
-              options
-            )
+            <div className="poll-options">
+              {options}
+            </div>
           )
     }
 })
 
 ReactDOM.render(
-  React.createElement(PollList, null),
+  <PollList />,
   document.getElementById('user-poll-list')
   );

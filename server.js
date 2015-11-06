@@ -27,6 +27,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
+app.set('view engine', 'jade');
+app.set('views', './app/views');
+
 routes(app, passport);
 
 var port = 8080;

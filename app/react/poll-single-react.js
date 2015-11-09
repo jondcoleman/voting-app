@@ -4,13 +4,13 @@ var myPollUrl = appUrl + 'api/poll/' + _id;
 
 
 var PollDetail = React.createClass({
-  loadPollsFromServer: function() {
+  loadPollsFromServer: function(showResultsParam) {
     $.getJSON(myPollUrl, function(data){
-      this.setState({data: data});
+      this.setState({data: data, showResults: showResultsParam});
     }.bind(this))
   },
   getInitialState: function() {
-    return {data: []};
+    return {data: [], showResults: false  };
   },
   componentDidMount: function() {
     this.loadPollsFromServer();
@@ -23,7 +23,7 @@ var PollDetail = React.createClass({
             <div className="row">
               <div className="poll-detail col-md-8 col-md-offset-2" key={this.state.data._id}>
                 <div className="poll-title"><h2>{this.state.data.pollName}</h2></div>
-                <PollOptions data={pollDetails.options} onVote={this.vote}/>
+                <PollOptions data={pollDetails.options} onVote={this.vote} showResults={this.state.showResults}/>
               </div>
             </div>
           </div>
@@ -34,8 +34,9 @@ var PollDetail = React.createClass({
       url: myPollUrl + '/' + index,
       type: 'PUT',
       success: function(result) {
-        console.log(result);
-      },
+        alert(result.message);
+        this.loadPollsFromServer(true);
+      }.bind(this),
       error: function(data) {
         console.log('fail');
       }
@@ -49,9 +50,12 @@ var PollOptions = React.createClass({
           var options = this.props.data.map(function(option, index){
             return (
                 <div className="poll-option" key={option._id}> 
-                  <div className="button-cn">
-                    <div className="poll-vote-button btn btn-primary" onClick={this.handleClick.bind(this, option, index)}>Vote</div>
-                  </div>
+                  { this.props.showResults ? null :
+                    <div className="button-cn">
+                      <div className="poll-vote-button btn" onClick={this.handleClick.bind(this, option, index)}>Vote</div>
+                    </div>
+                  }
+                  { this.props.showResults ? <div className="poll-votes-number">{option.votes}</div> : null }
                   <div className="poll-option-name">{option.optionName}</div>
                 </div>
               )
@@ -68,6 +72,25 @@ var PollOptions = React.createClass({
       this.props.onVote(option, index);
     }
 })
+
+var PollOptionsVoted = React.createClass({
+    render: function() {
+        var options = this.props.data.map(function(option){
+          return (
+              <div className="poll-option" key={option._id}> 
+                <div className="poll-votes-number">{option.votes}</div>
+                <div className="poll-option-name">{option.optionName}</div>
+              </div>
+            )
+        })
+        return (
+            <div className="poll-options">
+              {options}
+            </div>
+          )
+    }
+})
+
 
 ReactDOM.render(
   <PollDetail />,

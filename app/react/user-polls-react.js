@@ -14,18 +14,28 @@ var PollList = React.createClass({
   },
   componentDidMount: function() {
     this.loadPollsFromServer();
-    setInterval(this.loadPollsFromServer, 1000);  //Could be used for polling regularly
+    setInterval(this.loadPollsFromServer, 1000);  //used for polling regularly for live updates
   },
   render: function() {
     var pollDetails = this.state.data.map(function(detail, index){
       var pollUrl = appUrl + 'polls/' + detail._id;
+      var shareUrl = "http://twitter.com/share?text=Vote on my poll:&url=" + pollUrl
       return (
         <div className="container" key={detail._id}>
           <div className="row">
             <div className="poll-detail col-md-8 col-md-offset-2">
               <h1><a href={pollUrl}>{detail.pollName}</a></h1>
               <PollOptions data={detail.options}/>
-              <div className="btn btn-danger btn-delete-poll blah" onClick={this.remove.bind(this, detail, index)}>DELETE POLL</div>
+              <div>
+                <div className="btn btn-danger btn-delete-poll blah" onClick={this.remove.bind(this, detail, index)}>DELETE POLL</div>
+              </div>
+              <div>
+                <div className="twitter-container">
+                  <a className="btn btn-social-icon btn-twitter" href={shareUrl} target="_blank">
+                    <span className="fa fa-twitter"></span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

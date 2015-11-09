@@ -14,18 +14,28 @@ var PollList = React.createClass({displayName: "PollList",
   },
   componentDidMount: function() {
     this.loadPollsFromServer();
-    setInterval(this.loadPollsFromServer, 1000);  //Could be used for polling regularly
+    setInterval(this.loadPollsFromServer, 1000);  //used for polling regularly for live updates
   },
   render: function() {
     var pollDetails = this.state.data.map(function(detail, index){
       var pollUrl = appUrl + 'polls/' + detail._id;
+      var shareUrl = "http://twitter.com/share?text=Vote on my poll:&url=" + pollUrl
       return (
         React.createElement("div", {className: "container", key: detail._id}, 
           React.createElement("div", {className: "row"}, 
             React.createElement("div", {className: "poll-detail col-md-8 col-md-offset-2"}, 
               React.createElement("h1", null, React.createElement("a", {href: pollUrl}, detail.pollName)), 
               React.createElement(PollOptions, {data: detail.options}), 
-              React.createElement("div", {className: "btn btn-danger btn-delete-poll blah", onClick: this.remove.bind(this, detail, index)}, "DELETE POLL")
+              React.createElement("div", null, 
+                React.createElement("div", {className: "btn btn-danger btn-delete-poll blah", onClick: this.remove.bind(this, detail, index)}, "DELETE POLL")
+              ), 
+              React.createElement("div", null, 
+                React.createElement("div", {className: "twitter-container"}, 
+                  React.createElement("a", {className: "btn btn-social-icon btn-twitter", href: shareUrl, target: "_blank"}, 
+                    React.createElement("span", {className: "fa fa-twitter"})
+                  )
+                )
+              )
             )
           )
         )

@@ -53,14 +53,19 @@ function PollHandler () {
     this.addVote = function (req, res) {
         Poll.findById(req.params.id, function(err, poll){
             if (err) {res.send(err)}
-            
-            poll.options[req.params.option].votes += 1;
-            
-            poll.save(function(err){
-                if (err) {res.send(err)}
+            if (req.session.votes.indexOf(req.params.id) >= 0){
+                res.json({message: 'You already voted!'})
+            } else {
+                poll.options[req.params.option].votes += 1;
+                req.session.votes.push(req.params.id);
+                console.log(req.session.votes);
                 
-                res.json({ message: 'Vote Added!' })
-            })
+                poll.save(function(err){
+                    if (err) {res.send(err)}
+                    
+                    res.json({ message: 'Vote Added!' })
+                })
+            }
         })
     }
 };

@@ -19,9 +19,9 @@ var PollForm = React.createClass({
             <div id="options">
               <PollOption data={this.state.data}/>
             </div>
-            <div id="addOption" className="btn btn-primary poll-buttons" onClick={this.handleClick}>Add Option</div>
+            <div id="addOption" className="btn poll-buttons" onClick={this.handleClick}>Add Option</div>
             <div>
-              <input type="submit" value="Post" className="btn btn-success poll-buttons" />
+              <input type="submit" value="Post" className="btn poll-buttons" />
             </div>
             <div id='validation-msg'></div>
             <div id='success-msg' hidden>Poll Created - View your polls on <a href="/my-polls">My Polls</a></div>

@@ -19,9 +19,9 @@ var PollForm = React.createClass({displayName: "PollForm",
             React.createElement("div", {id: "options"}, 
               React.createElement(PollOption, {data: this.state.data})
             ), 
-            React.createElement("div", {id: "addOption", className: "btn btn-primary poll-buttons", onClick: this.handleClick}, "Add Option"), 
+            React.createElement("div", {id: "addOption", className: "btn poll-buttons", onClick: this.handleClick}, "Add Option"), 
             React.createElement("div", null, 
-              React.createElement("input", {type: "submit", value: "Post", className: "btn btn-success poll-buttons"})
+              React.createElement("input", {type: "submit", value: "Post", className: "btn poll-buttons"})
             ), 
             React.createElement("div", {id: "validation-msg"}), 
             React.createElement("div", {id: "success-msg", hidden: true}, "Poll Created - View your polls on ", React.createElement("a", {href: "/my-polls"}, "My Polls"))

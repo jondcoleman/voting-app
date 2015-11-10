@@ -57,7 +57,7 @@ var PollForm = React.createClass({displayName: "PollForm",
         var data = $("#pollForm input").filter(function () {
             return !!this.value;
         });
-        $.post(appUrl + '/api/polls', data.serialize());
+        $.post(appUrl + 'api/polls', data.serialize());
         success.show();
         
         //reset

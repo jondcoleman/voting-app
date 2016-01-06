@@ -15,12 +15,12 @@ function PollHandler () {
             if (err) {
                 throw err;
             }
-            
+
             return newPoll;
         });
     };
-    
-    this.getPolls = function (req, res) {
+
+    this.getUserPolls = function (req, res) {
         Poll
             .find ({ 'userId': req.user._id })
             .exec(function(err, result) {
@@ -28,9 +28,19 @@ function PollHandler () {
                 res.json(result);
             }
         );
-        
+
     };
-    
+
+    this.getPolls = function (req, res) {
+      Poll
+          .find ({})
+          .exec(function(err, result) {
+              if (err) { throw err;}
+              res.json(result);
+          }
+      );
+    }
+
     this.getPoll = function (req, res) {
         Poll
             .findOne ({'_id': req.params.id})
@@ -40,16 +50,16 @@ function PollHandler () {
                 res.json(result);
             });
     }
-    
+
     this.deletePoll = function (req, res) {
         Poll
             .remove({'_id' : req.params.id }, function (err) {
                 if (err) {res.send(err)}
-                
+
                 res.json({ message: 'Successfully deleted' });
             });
     }
-    
+
     this.addVote = function (req, res) {
         Poll.findById(req.params.id, function(err, poll){
             if (err) {res.send(err)}
@@ -59,10 +69,10 @@ function PollHandler () {
                 poll.options[req.params.option].votes += 1;
                 req.session.votes.push(req.params.id);
                 console.log(req.session.votes);
-                
+
                 poll.save(function(err){
                     if (err) {res.send(err)}
-                    
+
                     res.json({ message: 'Vote Added!' })
                 })
             }

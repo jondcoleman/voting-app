@@ -7,20 +7,13 @@ var Link = require('react-router').Link;
 var Main = require('./components/Main');
 var PollForm = require('./components/PollForm');
 var Poll = require('./components/Poll');
+var SinglePoll = require('./components/SinglePoll');
 var AllPolls = require('./components/AllPolls');
 var UserPolls = require('./components/UserPolls');
 
 module.exports = React.createClass({
 
 	render: function() {
-		// var UserGrid = React.createClass({
-		// 	render: function() {
-		// 		return (
-		// 			<Grid type="user" userId={this.props.routeParams.userId} user={this.props.user}/>
-		// 		)
-		// 	}
-		// })
-
 		return (
 			<Router>
 				<Route path="/" component={Main}>
@@ -28,6 +21,8 @@ module.exports = React.createClass({
 					<Route path="/addpoll" component={PollForm}/>
 					<Route path="/allpolls" component={AllPolls}/>
 					<Route path="/mypolls" component={UserPolls}/>
+					<Route path="/poll/:pollid" component={SinglePoll}/>
+					<Route path="/edit/:pollid" component={PollForm}/>
 				</Route>
 			</Router>
 		)

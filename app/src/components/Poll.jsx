@@ -8,33 +8,14 @@ var ListGroupItem = require('react-bootstrap').ListGroupItem;
 var Input = require('react-bootstrap').Input;
 var Button = require('react-bootstrap').Button;
 var Badge = require('react-bootstrap').Badge;
-
-var samplePoll = {
-  type: 'view',
-  poll: {
-    pollName: 'Testing a Poll?',
-    options: [
-      {
-        optionName: 'Option Test 1',
-        votes: 2
-      }, {
-        optionName: 'Option Test 2',
-        votes: 50
-      }
-    ]
-  }
-}
-
+var Link = require('react-router').Link;
 
 module.exports = React.createClass({
-  componentDidMount: function(
-  //do something here if need be
-  ) {},
   render: function() {
     var options = this.props.poll.options.map(function(option, index) {
       return (
         <ListGroupItem key={index}>
-          {this.props.type === 'vote' ? <Button>Vote</Button> : <Badge>{option.votes}</Badge>}
+          {this.props.type === 'vote' ? <Button onClick={this.props.handleVote.bind(null, index)}>Vote</Button> : <Badge>{option.votes}</Badge>}
           <span className="poll-option-name">{option.optionName}</span>
         </ListGroupItem>
       )
@@ -45,11 +26,19 @@ module.exports = React.createClass({
         <Row>
           <Col md={6} mdOffset={3}>
             <div>
-              <h1>{this.props.poll.pollName}</h1>
+              <h1><Link to={'/poll/' + this.props.poll._id}>{this.props.poll.pollName}</Link></h1>
               <ListGroup>
                 {options}
               </ListGroup>
             </div>
+            {this.props.allowEdit ?
+              <div>
+                <Link to={'/edit/' + this.props.poll._id}><Button bsStyle="success">Edit</Button></Link>
+                <Button bsStyle="danger">Delete</Button>
+              </div>
+            :
+            null
+          }
           </Col>
         </Row>
       </Grid>

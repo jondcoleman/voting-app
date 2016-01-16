@@ -5,6 +5,7 @@ var Col = require('react-bootstrap').Col;
 var Input = require('react-bootstrap').Input;
 var PollOption = require('./PollOption');
 var Button = require('react-bootstrap').Button;
+var Ajax = require('simple-ajax');
 
 var blankPoll = {
   pollName: '',
@@ -21,11 +22,30 @@ var blankPoll = {
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return (this.props.pollDetails || blankPoll)
+    return blankPoll
+  },
+  componentDidMount: function() {
+    if (this.props.params.pollid){
+      var ajax = new Ajax({
+        url: '/api/poll/' + this.props.params.pollid,
+        method: 'GET'
+      })
+
+      ajax.on('success', function(event){
+
+        this.setState(
+          JSON.parse(event.target.response)
+        )
+        console.log(this.state)
+      }.bind(this))
+
+      ajax.send();
+    }
+
   },
   handleOptionChange: function(index, e) {
     var newOptions = this.state.options.slice();
-    newOptions[index].value = e.target.value;
+    newOptions[index].optionName = e.target.value;
     this.setState({options: newOptions})
   },
   handleTitleChange: function(e) {
@@ -45,9 +65,6 @@ module.exports = React.createClass({
     console.log('fake saved!');
     console.log(JSON.stringify(this.state, null, 2))
   },
-  componentDidMount: function(
-  //do something here if need be
-  ) {},
   render: function() {
     var pollOptions = this.state.options.map(function(option, index) {
       return <PollOption placeholder={option.placeholder} key={index} value={option.optionName} onChange={this.handleOptionChange.bind(this, index)}/>

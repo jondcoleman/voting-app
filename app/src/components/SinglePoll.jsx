@@ -1,24 +1,24 @@
 var React = require('react');
 var Poll = require('./Poll');
-var Ajax = require('simple-ajax');
+//var Ajax = require('simple-ajax');
 
 module.exports = React.createClass({
   getInitialState: function() {
     return ({poll: undefined})
   },
   componentDidMount: function(){
-    var ajax = new Ajax({
-      url: '/api/poll/' + this.props.params.pollid,
-      method: 'GET'
-    })
-
-    ajax.on('success', function(event){
-      this.setState({
-        poll: JSON.parse(event.target.response)
-      })
-    }.bind(this))
-
-    ajax.send();
+    // var ajax = new Ajax({
+    //   url: '/api/poll/' + this.props.params.pollid,
+    //   method: 'GET'
+    // })
+    //
+    // ajax.on('success', function(event){
+    //   this.setState({
+    //     poll: JSON.parse(event.target.response)
+    //   })
+    // }.bind(this))
+    //
+    // ajax.send();
   },
   render: function() {
     return (

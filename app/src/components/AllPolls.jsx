@@ -1,6 +1,6 @@
 var React = require('react');
 var PollList = require('./PollList');
-var Ajax = require('simple-ajax');
+//var Ajax = require('simple-ajax');
 var Api = require('../utils/api');
 
 module.exports = React.createClass({

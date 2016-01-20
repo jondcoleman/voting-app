@@ -6,6 +6,7 @@ var Input = require('react-bootstrap').Input;
 var PollOption = require('./PollOption');
 var Button = require('react-bootstrap').Button;
 //var Ajax = require('simple-ajax');
+var Api = require('../utils/api');
 
 var blankPoll = {
   pollName: '',
@@ -25,6 +26,12 @@ module.exports = React.createClass({
     return blankPoll
   },
   componentDidMount: function() {
+    if (this.props.params.pollid){
+      Api.get('poll')
+      .then(function(json){
+        this.setState(json);
+      })
+    }
     // if (this.props.params.pollid){
     //   var ajax = new Ajax({
     //     url: '/api/poll/' + this.props.params.pollid,

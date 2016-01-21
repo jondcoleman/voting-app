@@ -18,12 +18,18 @@ module.exports = {
       })
     })
   },
-    post: function(url) {
-      var options = {
-        method: 'POST'
-      };
-      return fetch(rootUrl + url, options).then(function(response) {
-        return response.json();
+  post: function(url, json) {
+    var options = {
+      method: 'POST',
+      body: JSON.stringify(json),
+      credentials: 'same-origin',
+      headers: new Headers({
+        'Content-Type': 'application/json'
       })
-    }
+    };
+    console.log(options);
+    return fetch(rootUrl + url, options).then(function(response) {
+      return response.json();
+    })
   }
+}

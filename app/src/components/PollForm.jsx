@@ -23,57 +23,52 @@ var blankPoll = {
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return blankPoll
+    return {poll: blankPoll}
   },
   componentDidMount: function() {
     if (this.props.params.pollid){
-      Api.get('poll')
-      .then(function(json){
-        this.setState(json);
-      })
+      Api.get('poll/' + this.props.params.pollid)
+        .then(function(data){
+          this.setState({
+            poll: data
+          })
+        }.bind(this))
     }
-    // if (this.props.params.pollid){
-    //   var ajax = new Ajax({
-    //     url: '/api/poll/' + this.props.params.pollid,
-    //     method: 'GET'
-    //   })
-    //
-    //   ajax.on('success', function(event){
-    //
-    //     this.setState(
-    //       JSON.parse(event.target.response)
-    //     )
-    //     console.log(this.state)
-    //   }.bind(this))
-    //
-    //   ajax.send();
-    // }
-
   },
   handleOptionChange: function(index, e) {
-    var newOptions = this.state.options.slice();
+    var newOptions = this.state.poll.options.slice();
     newOptions[index].optionName = e.target.value;
     this.setState({options: newOptions})
   },
   handleTitleChange: function(e) {
-    this.setState({pollName: e.target.value})
+    this.state.poll.pollName = e.target.value
+    this.setState({poll: this.state.poll})
   },
   addOption: function(e) {
-    var newOptions = this.state.options.slice();
-    var newOptionNumber = this.state.options.length + 1;
+    var newOptions = this.state.poll.options.slice();
+    var newOptionNumber = this.state.poll.options.length + 1;
     newOptions.push({
       value: '',
       placeholder: "Option " + newOptionNumber
     })
-    this.setState({options: newOptions})
+    this.state.poll.options = newOptions;
+    this.setState({poll: this.state.poll})
   },
   savePoll: function(e) {
     e.preventDefault;
     console.log('fake saved!');
+    var pollToPost = {
+      pollName: this.state.poll.pollName,
+      options: this.state.poll.options
+    }
+    Api.post('polls', pollToPost)
+      .then(function(data){
+        console.log(data);
+      })
     console.log(JSON.stringify(this.state, null, 2))
   },
   render: function() {
-    var pollOptions = this.state.options.map(function(option, index) {
+    var pollOptions = this.state.poll.options.map(function(option, index) {
       return <PollOption placeholder={option.placeholder} key={index} value={option.optionName} onChange={this.handleOptionChange.bind(this, index)}/>
     }.bind(this))
 
@@ -82,7 +77,7 @@ module.exports = React.createClass({
         <Row>
           <Col md={6} mdOffset={3}>
             <form>
-              <Input type="text" label="Poll Name" placeholder="What is your favorite type of poll?" value={this.state.pollName} onChange={this.handleTitleChange}/>
+              <Input type="text" label="Poll Name" placeholder="What is your favorite type of poll?" value={this.state.poll.pollName} onChange={this.handleTitleChange}/>
               <label className="control-label">Poll Options</label>
               {pollOptions}
               <Button onClick={this.addOption}>Add Option</Button>

@@ -36,6 +36,7 @@ app.use(function(req, res, next) {
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json());
 
 app.set('view engine', 'jade');
 app.set('views', './app/views');

@@ -1,24 +1,19 @@
 var React = require('react');
 var PollList = require('./PollList');
 //var Ajax = require('simple-ajax');
+var Api = require('../utils/api');
 
 module.exports = React.createClass({
   getInitialState: function() {
     return {polls: []}
   },
   componentDidMount: function(){
-    // var ajax = new Ajax({
-    //   url: '/api/my-polls',
-    //   method: 'GET'
-    // })
-    //
-    // ajax.on('success', function(event){
-    //   this.setState({
-    //     polls: JSON.parse(event.target.response)
-    //   })
-    // }.bind(this))
-    //
-    // ajax.send();
+    Api.get('my-polls')
+      .then(function(data){
+        this.setState({
+          polls: data
+        })
+      }.bind(this))
   },
   render: function() {
     return (

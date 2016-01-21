@@ -6,10 +6,10 @@ var Poll = require('../models/polls.js');
 function PollHandler () {
     this.addPoll = function (req, res) {
         var newPoll = new Poll();
-        newPoll.pollName = req.body.PollName;
+        newPoll.pollName = req.body.pollName;
         newPoll.userId = req.user._id;
-        req.body.option.map(function(opt){
-            newPoll.options.push({optionName: opt, votes:0});
+        req.body.options.map(function(option){
+            newPoll.options.push({optionName: option.optionName, votes:0});
         });
         newPoll.save(function (err) {
             if (err) {

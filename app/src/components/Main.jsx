@@ -13,17 +13,6 @@ module.exports = React.createClass({
       .then(function(data){
         data ? this.setState({user : data}) : null;
       }.bind(this))
-    // var ajax = new Ajax({
-    //   url: '/api/user',
-    //   method: 'GET'
-    // })
-    //
-    // ajax.on('success', function(event){
-    //   response = event.target.response;
-    //   response === '' ? null : this.setState({user: JSON.parse(response)})
-    // }.bind(this))
-    //
-    // ajax.send();
   },
   render: function() {
     return (

@@ -7,6 +7,8 @@ var PollOption = require('./PollOption');
 var Button = require('react-bootstrap').Button;
 //var Ajax = require('simple-ajax');
 var Api = require('../utils/api');
+var Routes = require('../Routes');
+var History = require('react-router').History
 
 var blankPoll = {
   pollName: '',
@@ -22,6 +24,7 @@ var blankPoll = {
 }
 
 module.exports = React.createClass({
+  mixins: [History],
   getInitialState: function() {
     return {poll: blankPoll}
   },
@@ -29,7 +32,6 @@ module.exports = React.createClass({
     if (this.props.params.pollid){
       Api.get('poll/' + this.props.params.pollid)
         .then(function(data){
-          console.log(data)
           this.setState({
             poll: data
           })
@@ -57,16 +59,10 @@ module.exports = React.createClass({
   },
   savePoll: function(e) {
     e.preventDefault;
-    console.log('fake saved!');
-    // var pollToPost = {
-    //   pollName: this.state.poll.pollName,
-    //   options: this.state.poll.options
-    // }
     Api.post('polls', this.state.poll)
       .then(function(data){
-        console.log(data);
-      })
-    console.log(JSON.stringify(this.state, null, 2))
+        this.history.pushState(null, '/poll/' + data._id)
+      }.bind(this))
   },
   render: function() {
     var pollOptions = this.state.poll.options.map(function(option, index) {

@@ -27,9 +27,18 @@ module.exports = {
         'Content-Type': 'application/json'
       })
     };
-    console.log(options);
+    //console.log(options);
     return fetch(rootUrl + url, options).then(function(response) {
       return response.json();
+    })
+  },
+  delete: function(url, id) {
+    var options = {
+      method: 'DELETE',
+      credentials: 'same-origin'
+    }
+    return fetch(rootUrl + url, options).then(function(response) {
+      console.log(response);
     })
   }
 }

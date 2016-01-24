@@ -17,7 +17,13 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <PollList polls={this.state.polls} type={'view'} allowEdit={true}/>
+      <PollList polls={this.state.polls} deletePoll={this.deletePoll} type={'view'} allowEdit={true}/>
     )
+  },
+  deletePoll: function(pollId, index) {
+    newPolls = this.state.polls.slice()
+    newPolls.splice(index, 1)
+    this.setState({polls: newPolls})
+    Api.delete('poll/' + pollId);
   }
 })

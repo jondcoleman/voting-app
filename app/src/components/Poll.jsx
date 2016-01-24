@@ -10,6 +10,8 @@ var Button = require('react-bootstrap').Button;
 var Badge = require('react-bootstrap').Badge;
 var Link = require('react-router').Link;
 
+var Api = require('../utils/api');
+
 module.exports = React.createClass({
   render: function() {
     var options = this.props.poll.options.map(function(option, index) {
@@ -34,7 +36,7 @@ module.exports = React.createClass({
             {this.props.allowEdit ?
               <div>
                 <Link to={'/edit/' + this.props.poll._id}><Button bsStyle="success">Edit</Button></Link>
-                <Button bsStyle="danger">Delete</Button>
+                <Button bsStyle="danger" onClick={this.handleDelete}>Delete</Button>
               </div>
             :
             null
@@ -43,5 +45,9 @@ module.exports = React.createClass({
         </Row>
       </Grid>
     )
+  },
+  handleDelete: function(e){
+    e.preventDefault;
+    this.props.deletePoll(this.props.poll._id, this.props.index);
   }
 })

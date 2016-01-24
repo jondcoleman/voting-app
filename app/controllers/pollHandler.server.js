@@ -5,19 +5,41 @@ var Poll = require('../models/polls.js');
 
 function PollHandler () {
     this.addPoll = function (req, res) {
-        var newPoll = new Poll();
-        newPoll.pollName = req.body.pollName;
-        newPoll.userId = req.user._id;
-        req.body.options.map(function(option){
-            newPoll.options.push({optionName: option.optionName, votes:0});
-        });
-        newPoll.save(function (err) {
-            if (err) {
-                throw err;
-            }
+        if(req.body._id){
+          var docId = req.body._id
+        } else {
+          var docId = Schema.ObjectId();
+        }
 
-            return newPoll;
-        });
+        console.log(docId);
+        Poll
+          .findOneAndUpdate(
+            { _id : req.body._id },
+            {$set : {
+              pollName : req.body.pollName,
+              options : req.body.options,
+              userId: req.user._id
+            }},
+            { upsert : true, new: true },
+            function(err, doc){
+              console.log(err || doc);
+            }
+          )
+
+
+        // var newPoll = new Poll();
+        // newPoll.pollName = req.body.pollName;
+        // newPoll.userId = req.user._id;
+        // req.body.options.map(function(option){
+        //     newPoll.options.push({optionName: option.optionName, votes:0});
+        // });
+        // newPoll.save(function (err) {
+        //     if (err) {
+        //         throw err;
+        //     }
+        //
+        //     return newPoll;
+        // });
     };
 
     this.getUserPolls = function (req, res) {

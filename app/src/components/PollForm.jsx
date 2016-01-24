@@ -29,6 +29,7 @@ module.exports = React.createClass({
     if (this.props.params.pollid){
       Api.get('poll/' + this.props.params.pollid)
         .then(function(data){
+          console.log(data)
           this.setState({
             poll: data
           })
@@ -57,11 +58,11 @@ module.exports = React.createClass({
   savePoll: function(e) {
     e.preventDefault;
     console.log('fake saved!');
-    var pollToPost = {
-      pollName: this.state.poll.pollName,
-      options: this.state.poll.options
-    }
-    Api.post('polls', pollToPost)
+    // var pollToPost = {
+    //   pollName: this.state.poll.pollName,
+    //   options: this.state.poll.options
+    // }
+    Api.post('polls', this.state.poll)
       .then(function(data){
         console.log(data);
       })

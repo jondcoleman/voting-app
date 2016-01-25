@@ -23,16 +23,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-app.use(function(req, res, next) {
-  var votes = req.session.votes;
-
-  if (!votes) {
-      votes = req.session.votes = [];
-  }
-
-  next();
-})
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

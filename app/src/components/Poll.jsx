@@ -22,7 +22,7 @@ module.exports = React.createClass({
     var options = this.props.poll.options.map(function(option, index) {
       return (
         <ListGroupItem key={index}>
-          {this.state.type === 'vote' ? <Button onClick={this.handleVote.bind(null, index)}>Vote</Button> : <Badge>{option.votes}</Badge>}
+          {this.state.type === 'vote' ? <Button onClick={this.handleVote.bind(null, index)}>Vote</Button> : <Badge>{option.votes.length}</Badge>}
           <span className="poll-option-name">{option.optionName}</span>
         </ListGroupItem>
       )

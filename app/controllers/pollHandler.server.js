@@ -8,7 +8,7 @@ function PollHandler() {
   this.addOrUpdatePoll = function(req, res){
     if (req.body._id) {
       var newOptions = req.body.options.map(function(option){
-        option.votes === undefined ? option.votes = 0 : null
+        option.votes === undefined ? option.votes = [] : null
         return option
       })
       Poll.findOneAndUpdate({
@@ -32,7 +32,7 @@ function PollHandler() {
       req.body.options.map(function(option) {
         newPoll.options.push({
           optionName: option.optionName,
-          votes: 0
+          votes: []
         });
       });
       newPoll.save(function(err) {
@@ -102,16 +102,19 @@ function PollHandler() {
   this.addVote = function(req, res) {
     Poll.findById(req.params.id, function(err, poll) {
       if (err) {
-        res.send(err)
+        res.json({
+          error: err
+        })
       }
-      if (req.session.votes.indexOf(req.params.id) >= 0) {
+      var option = poll.options[req.params.option]
+      console.log(req.sessionID, option);
+      if (option.votes.indexOf(req.sessionID) >= 0 || (req.user && option.votes.indexOf(req.user._id) >= 0)) {
+        console.log('already voted')
         res.json({
           message: 'You already voted!'
         })
       } else {
-        poll.options[req.params.option].votes += 1;
-        req.session.votes.push(req.params.id);
-        console.log(req.session.votes);
+        poll.options[req.params.option].votes.push(req.sessionID);
 
         poll.save(function(err) {
           if (err) {

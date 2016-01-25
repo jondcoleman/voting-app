@@ -41,14 +41,14 @@ var PollList = React.createClass({
         </div>
       );
     }, this)
-    
+
     return (
         <div className="poll-list">
           {pollDetails}
-        </div>  
+        </div>
       )
   },
-  
+
   remove: function(poll, index) {
     var component = this; //PollList Component
 
@@ -75,8 +75,8 @@ var PollOptions = React.createClass({
     render: function() {
         var options = this.props.data.map(function(option){
           return (
-              <div className="poll-option" key={option._id}> 
-                <div className="poll-votes-number">{option.votes}</div>
+              <div className="poll-option" key={option._id}>
+                <div className="poll-votes-number">{option.votes.length}</div>
                 <div className="poll-option-name">{option.optionName}</div>
               </div>
             )

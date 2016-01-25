@@ -20,6 +20,7 @@ module.exports = function (app, passport) {
 
     app.route('/')
         .get(function (req, res) {
+            console.log(req.sessionID);
             res.sendFile(path + '/public/index.html');
         });
 

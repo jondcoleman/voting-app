@@ -26,7 +26,7 @@ module.exports = React.createClass({
     )
   },
   handleVote: function(optionIndex) {
-    this.state.poll.options[optionIndex].votes++
+    this.state.poll.options[optionIndex].votes.push('tempSessionID')
     this.setState({
       poll: this.state.poll
     })

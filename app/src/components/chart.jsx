@@ -22,7 +22,7 @@ module.exports = React.createClass({
       return item.optionName;
     })
     var chartData = dataset.map(function(item) {
-      return item.votes;
+      return item.votes.length;
     })
     var options = {}
     var data = {

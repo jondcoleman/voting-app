@@ -10,19 +10,24 @@ var Button = require('react-bootstrap').Button;
 var Badge = require('react-bootstrap').Badge;
 var Link = require('react-router').Link;
 
+var Chart = require('./chart');
+
 var Api = require('../utils/api');
 
 module.exports = React.createClass({
+  getInitialState: function() {
+    return ({type: this.props.type || 'vote'})
+  },
   render: function() {
     var options = this.props.poll.options.map(function(option, index) {
       return (
         <ListGroupItem key={index}>
-          {this.props.type === 'vote' ? <Button onClick={this.props.handleVote.bind(null, index)}>Vote</Button> : <Badge>{option.votes}</Badge>}
+          {this.state.type === 'vote' ? <Button onClick={this.handleVote.bind(null, index)}>Vote</Button> : <Badge>{option.votes}</Badge>}
           <span className="poll-option-name">{option.optionName}</span>
         </ListGroupItem>
       )
     }.bind(this))
-
+    console.log(this.props.poll)
     return (
       <Grid>
         <Row>
@@ -43,11 +48,22 @@ module.exports = React.createClass({
           }
           </Col>
         </Row>
+        <Row>
+          <Col md={6} mdOffset={3}>
+            <Chart poll={this.props.poll} />
+          </Col>
+        </Row>
       </Grid>
     )
   },
   handleDelete: function(e){
     e.preventDefault;
     this.props.deletePoll(this.props.poll._id, this.props.index);
+  },
+  handleVote: function(optionIndex) {
+    this.props.addVote(optionIndex);
+    this.setState({
+      type: 'result'
+    })
   }
 })

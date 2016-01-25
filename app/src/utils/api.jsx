@@ -32,6 +32,16 @@ module.exports = {
       return response.json();
     })
   },
+  Put: function(url) {
+    var options = {
+      method: 'PUT',
+      credential: 'same-origin'
+    }
+
+    return fetch(rootUrl + url, options).then(function(response) {
+      console.log(response);
+    })
+  },
   delete: function(url, id) {
     var options = {
       method: 'DELETE',

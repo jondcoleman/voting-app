@@ -5,14 +5,18 @@ var mongoose = require('mongoose');
 //var User = require('../models/users.js');
 
 function PollHandler() {
-  this.addOrUpdatePoll = function(req, res) {
+  this.addOrUpdatePoll = function(req, res){
     if (req.body._id) {
+      var newOptions = req.body.options.map(function(option){
+        option.votes === undefined ? option.votes = 0 : null
+        return option
+      })
       Poll.findOneAndUpdate({
           _id: req.body._id
         }, {
           $set: {
             pollName: req.body.pollName,
-            options: req.body.options,
+            options: newOptions,
           }
         }, {
           new: true
@@ -111,7 +115,9 @@ function PollHandler() {
 
         poll.save(function(err) {
           if (err) {
-            res.send(err)
+            res.json({
+              message: err
+            })
           }
 
           res.json({

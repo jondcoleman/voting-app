@@ -17,7 +17,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <PollList polls={this.state.polls} type={'view'}/>
+      <PollList polls={this.state.polls}/>
     )
   }
 })

@@ -113,7 +113,6 @@ function PollHandler() {
       } else {
         poll.options[req.params.option].votes += 1;
         req.session.votes.push(req.params.id);
-        console.log(req.session.votes);
 
         poll.save(function(err) {
           if (err) {

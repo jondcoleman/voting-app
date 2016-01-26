@@ -1,3 +1,25 @@
+body {
+  padding-bottom: 5vh;
+}
+
 .poll-option-name {
   margin-left:10px;
+}
+
+.poll-container {
+  margin-bottom:3vh;
+}
+
+.poll-chart-container {
+  margin-top: 1vh;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-container {
+  margin-bottom:10px;
+}
+
+.btn {
+  margin-right: 5px;
 }

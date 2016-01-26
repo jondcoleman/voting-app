@@ -38,17 +38,17 @@ module.exports = React.createClass({
     }.bind(this))
     console.log(this.props.poll)
     return (
-      <Grid>
+      <Grid className="poll-container">
         <Row>
           <Col md={6} mdOffset={3}>
+            <h3><Link to={'/poll/' + this.props.poll._id}>{this.props.poll.pollName}</Link></h3>
             <div>
-              <h1><Link to={'/poll/' + this.props.poll._id}>{this.props.poll.pollName}</Link></h1>
               <ListGroup>
                 {options}
               </ListGroup>
             </div>
             {this.props.allowEdit ?
-              <div>
+              <div className="btn-container">
                 <Link to={'/edit/' + this.props.poll._id}><Button bsStyle="success">Edit</Button></Link>
                 <Button bsStyle="danger" onClick={this.handleDelete}>Delete</Button>
               </div>
@@ -57,11 +57,18 @@ module.exports = React.createClass({
           }
           </Col>
         </Row>
-        <Row>
-          <Col md={6} mdOffset={3}>
-            <Chart poll={this.props.poll} />
-          </Col>
-        </Row>
+        {this.state.type === 'vote' ?
+          null
+          :
+          <Row>
+            <Col md={6} mdOffset={3}>
+              <div className="poll-chart-container">
+                <Chart poll={this.props.poll} />
+              </div>
+            </Col>
+          </Row>
+        }
+
       </Grid>
     )
   },

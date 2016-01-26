@@ -13,7 +13,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <canvas id={"Chart" + this.props.poll._id} width="600" height="400"></canvas>
+      <canvas id={"Chart" + this.props.poll._id} width="600" height="250"></canvas>
     )
   },
   doChartThings: function(){
@@ -24,7 +24,9 @@ module.exports = React.createClass({
     var chartData = dataset.map(function(item) {
       return item.votes;
     })
-    var options = {}
+    var options = {
+      scaleShowGridLines : false
+    }
     var data = {
       labels: chartLabels,
       datasets: [

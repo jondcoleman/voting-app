@@ -12,6 +12,11 @@ module.exports = function(){
   },
 
   this.checkVotedPoll = function(pollId){
-    return JSON.parse(votedPolls).indexOf(pollId) < 0 ? false : true;
+    var returnVal
+    if (votedPolls) {
+      return JSON.parse(votedPolls).indexOf(pollId) < 0 ? false : true
+    } else {
+      return false
+    }
   }
 }

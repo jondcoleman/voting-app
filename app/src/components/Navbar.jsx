@@ -33,8 +33,8 @@ module.exports = React.createClass({
           <Nav pullRight>
 
             <li><Link to="/allpolls">All Polls</Link></li>
-            {this.props.user ? <li><Link to="/addpoll">Add Polls</Link></li> : null}
-            {this.props.user ? <li><Link to="/mypolls">My Polls</Link></li> : null}
+            {this.props.user ? <li><Link to="/addpoll">Add Poll</Link></li> : null}
+            {this.props.user ? <li><Link to="/mypolls">Manage My Polls</Link></li> : null}
             {this.props.user
               ?
                 <li><a href="/logout">Logout</a></li>

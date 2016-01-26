@@ -35,7 +35,7 @@ module.exports = {
   Put: function(url) {
     var options = {
       method: 'PUT',
-      credential: 'same-origin'
+      credentials: 'same-origin'
     }
 
     return fetch(rootUrl + url, options).then(function(response) {

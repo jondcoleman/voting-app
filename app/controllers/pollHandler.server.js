@@ -102,7 +102,9 @@ function PollHandler() {
   this.addVote = function(req, res) {
     Poll.findById(req.params.id, function(err, poll) {
       if (err) {
-        res.send(err)
+        res.json({
+          message : err
+        })
       }
       if (req.session.votes.indexOf(req.params.id) >= 0) {
         res.json({

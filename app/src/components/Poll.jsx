@@ -13,10 +13,19 @@ var Link = require('react-router').Link;
 var Chart = require('./chart');
 
 var Api = require('../utils/api');
+var LocalSession = require('../utils/localSession');
+
+localSession = new LocalSession();
 
 module.exports = React.createClass({
   getInitialState: function() {
     return ({type: this.props.type || 'vote'})
+  },
+  componentDidMount: function() {
+    console.log(localSession.checkVotedPoll(this.props.poll._id))
+    this.setState({
+      type: localSession.checkVotedPoll(this.props.poll._id) ? 'view' : 'vote'
+    })
   },
   render: function() {
     var options = this.props.poll.options.map(function(option, index) {

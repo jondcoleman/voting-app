@@ -3,13 +3,15 @@ module.exports = function(){
 
   this.addVotedPoll = function(pollId){
     if (!votedPolls) {
-      sessionStorage.setItem('votedPolls', [pollId])
+      sessionStorage.setItem('votedPolls', JSON.stringify([pollId]))
     } else {
-      votedPolls.push(pollId)
+      var polls = JSON.parse(votedPolls)
+      polls.push(pollId)
+      sessionStorage.setItem('votedPolls', JSON.stringify(polls))
     }
   },
 
   this.checkVotedPoll = function(pollId){
-    return votedPolls.indexOf(pollId) < 0 ? false : true;
+    return JSON.parse(votedPolls).indexOf(pollId) < 0 ? false : true;
   }
 }

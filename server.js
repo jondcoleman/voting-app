@@ -6,7 +6,7 @@ var express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     bodyParser = require('body-parser');
-    
+
 
 var app = express();
 require('dotenv').load();
@@ -25,24 +25,25 @@ app.use(session({
 
 app.use(function(req, res, next) {
   var votes = req.session.votes;
-  
+
   if (!votes) {
       votes = req.session.votes = [];
   }
-  
+
   next();
 })
 
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.json());
 
 app.set('view engine', 'jade');
 app.set('views', './app/views');
 
 routes(app, passport);
 
-var port = 8080;
+var port = 3000;
 app.listen(process.env.PORT || port, function () {
     console.log('Node.js listening on port ' + port + '...');
 });

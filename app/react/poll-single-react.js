@@ -49,7 +49,7 @@ var PollOptions = React.createClass({
         if (this.props.data) { //if statement prevents map error because data is undefined initially
           var options = this.props.data.map(function(option, index){
             return (
-                <div className="poll-option" key={option._id}> 
+                <div className="poll-option" key={option._id}>
                   { this.props.showResults ? null :
                     <div className="button-cn">
                       <div className="poll-vote-button btn" onClick={this.handleClick.bind(this, option, index)}>Vote</div>
@@ -61,7 +61,7 @@ var PollOptions = React.createClass({
               )
           }, this)
         }
-        
+
         return (
             <div className="poll-options">
               {options}
@@ -77,7 +77,7 @@ var PollOptionsVoted = React.createClass({
     render: function() {
         var options = this.props.data.map(function(option){
           return (
-              <div className="poll-option" key={option._id}> 
+              <div className="poll-option" key={option._id}>
                 <div className="poll-votes-number">{option.votes}</div>
                 <div className="poll-option-name">{option.optionName}</div>
               </div>

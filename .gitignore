@@ -1,7 +1,6 @@
 node_modules/
 .eslintrc
 .env
-
+public/main.js
 common/
 .module-cache/
-public/main.js

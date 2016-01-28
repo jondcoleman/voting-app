@@ -37,6 +37,9 @@ module.exports = function (app, passport) {
     app.route('/api/poll/:id/:option')
         .put(pollHandler.addVote);
 
+    app.route('/api/addOption/:id')
+        .post(pollHandler.addNewOption);
+
     app.route('/api/poll/:id')
         .get(pollHandler.getPoll)
         .delete(isLoggedIn, pollHandler.deletePoll)

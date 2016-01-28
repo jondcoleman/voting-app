@@ -25,7 +25,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      this.state.poll ? <Poll poll={this.state.poll} addVote={this.handleVote} deletePoll={this.props.deletePoll} type={this.props.type} allowEdit={this.props.allowEdit}/> : null
+      this.state.poll ? <Poll poll={this.state.poll} addVote={this.handleVote} deletePoll={this.props.deletePoll} type={this.props.type} allowEdit={this.props.allowEdit} handleNewOption={this.handleNewOption}/> : null
     )
   },
   handleVote: function(optionIndex) {
@@ -38,5 +38,18 @@ module.exports = React.createClass({
       .then(function(data){
         console.log(data)
       })
+    },
+    handleNewOption: function(newOption){
+      var json = {newOptionName: newOption}
+      Api.post('addOption/' + this.state.poll._id, json)
+        .then(function(data){
+          console.log(data)
+        })
+      localSession.addVotedPoll(this.state.poll._id);
+      this.state.poll.options.push({
+        optionName: newOption,
+        votes: 1
+      })
+      console.log("need to post data here")
     }
 })

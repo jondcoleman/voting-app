@@ -5,12 +5,17 @@ var mongoose = require('mongoose');
 //var User = require('../models/users.js');
 
 function PollHandler() {
-  this.addOrUpdatePoll = function(req, res){
+  this.addOrUpdatePoll = function(req, res) {
     if (req.body._id) {
-      var newOptions = req.body.options.map(function(option){
+      var newOptions = req.body.options.map(function(option) {
         option.votes === undefined ? option.votes = 0 : null
+        console.log(option.optionName)
         return option
       })
+      newOptions.filter(function(option) {
+        return option.optionName !== undefined
+      })
+      console.log(newOptions)
       Poll.findOneAndUpdate({
           _id: req.body._id
         }, {
@@ -34,6 +39,9 @@ function PollHandler() {
           optionName: option.optionName,
           votes: 0
         });
+        newPoll.options.filter(function(option) {
+          return option.optionName !== undefined
+        })
       });
       newPoll.save(function(err) {
         if (err) {
@@ -90,7 +98,7 @@ function PollHandler() {
       }, function(err) {
         if (err) {
           res.json({
-            message : err
+            message: err
           })
         }
         res.json({
@@ -99,11 +107,30 @@ function PollHandler() {
       });
   }
 
+  this.addNewOption = function(req, res) {
+    Poll.findOneAndUpdate({
+        _id: req.params.id
+      }, {
+        $push: {
+          "options": {
+            optionName: req.body.newOptionName,
+            votes: 1
+          }
+        }
+      }, {
+        new: true
+      },
+      function(err, doc) {
+        console.log(doc)
+        res.json(err || doc)
+      })
+  }
+
   this.addVote = function(req, res) {
     Poll.findById(req.params.id, function(err, poll) {
       if (err) {
         res.json({
-          message : err
+          message: err
         })
       }
       if (req.session.votes.indexOf(req.params.id) >= 0) {

@@ -63,6 +63,7 @@ module.exports = React.createClass({
       .then(function(data){
         this.history.pushState(null, '/poll/' + data._id)
       }.bind(this))
+    this.setState({poll: blankPoll})
   },
   render: function() {
     var pollOptions = this.state.poll.options.map(function(option, index) {

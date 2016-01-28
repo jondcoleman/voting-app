@@ -19,10 +19,12 @@ localSession = new LocalSession();
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return ({type: this.props.type || 'vote'})
+    return ({
+      type: this.props.type || 'vote',
+      newOption: undefined
+    })
   },
   componentDidMount: function() {
-    console.log(localSession.checkVotedPoll(this.props.poll._id))
     this.setState({
       type: localSession.checkVotedPoll(this.props.poll._id) ? 'view' : 'vote'
     })
@@ -36,7 +38,6 @@ module.exports = React.createClass({
         </ListGroupItem>
       )
     }.bind(this))
-    console.log(this.props.poll)
     return (
       <Grid className="poll-container">
         <Row>
@@ -54,7 +55,15 @@ module.exports = React.createClass({
               </div>
             :
             null
-          }
+            }
+            {this.state.type === 'vote' ?
+            <form>
+              <Input type="text" placeholder={"New Option Name"} required value={this.state.newOption} onChange={this.handleInput}/>
+              <Button bsStyle="default" disabled={!this.state.newOption} onClick={this.addNewOption}>Add & Vote for New Option</Button>
+            </form>
+            :
+            null
+            }
           </Col>
         </Row>
         {this.state.type === 'vote' ?
@@ -81,5 +90,17 @@ module.exports = React.createClass({
     this.setState({
       type: 'result'
     })
+  },
+  handleInput: function(e){
+    this.setState({newOption: e.target.value})
+  },
+  addNewOption: function(e){
+    e.preventDefault()
+    this.props.handleNewOption(this.state.newOption)
+    this.setState({
+      newOption: undefined,
+      type: 'result'
+    })
   }
+
 })

@@ -10,32 +10,31 @@ var Api = require('../utils/api');
 var Routes = require('../Routes');
 var History = require('react-router').History
 
-var blankPoll = {
-  pollName: '',
-  options: [
-    {
-      optionName: '',
-      placeholder: "Option 1"
-    }, {
-      optionName: '',
-      placeholder: "Option 2"
-    }
-  ]
+function blankPoll() {
+  return {
+    pollName: '',
+    options: [
+      {
+        optionName: '',
+        placeholder: "Option 1"
+      }, {
+        optionName: '',
+        placeholder: "Option 2"
+      }
+    ]
+  }
 }
 
 module.exports = React.createClass({
   mixins: [History],
   getInitialState: function() {
-    return {poll: blankPoll}
+    return {poll: blankPoll()}
   },
   componentDidMount: function() {
-    if (this.props.params.pollid){
-      Api.get('poll/' + this.props.params.pollid)
-        .then(function(data){
-          this.setState({
-            poll: data
-          })
-        }.bind(this))
+    if (this.props.params.pollid) {
+      Api.get('poll/' + this.props.params.pollid).then(function(data) {
+        this.setState({poll: data})
+      }.bind(this))
     }
   },
   handleOptionChange: function(index, e) {
@@ -58,12 +57,11 @@ module.exports = React.createClass({
     this.setState({poll: this.state.poll})
   },
   savePoll: function(e) {
+    this.setState({poll: blankPoll()})
     e.preventDefault;
-    Api.post('polls', this.state.poll)
-      .then(function(data){
-        this.history.pushState(null, '/poll/' + data._id)
-      }.bind(this))
-    this.setState({poll: blankPoll})
+    Api.post('polls', this.state.poll).then(function(data) {
+      this.history.pushState(null, '/poll/' + data._id)
+    }.bind(this))
   },
   render: function() {
     var pollOptions = this.state.poll.options.map(function(option, index) {

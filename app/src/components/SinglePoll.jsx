@@ -8,24 +8,29 @@ localSession = new LocalSession();
 
 module.exports = React.createClass({
   getInitialState: function() {
-    return ({poll: undefined})
+    return ({poll: undefined, user: this.props.user || undefined})
   },
   componentDidMount: function(){
-    this.props.params && this.props.params.pollid ?
-    Api.get('poll/' + this.props.params.pollid)
-      .then(function(data){
+    if (this.props.params && this.props.params.pollid){
+      Api.get('poll/' + this.props.params.pollid)
+        .then(function(data){
+          this.setState({
+            poll: data
+          })
+        }.bind(this))
+      Api.get('user')
+        .then(function(data){
+          data ? this.setState({user : data}) : null;
+        }.bind(this))
+      } else {
         this.setState({
-          poll: data
+          poll: this.props.poll
         })
-      }.bind(this))
-    :
-    this.setState({
-      poll: this.props.poll
-    })
+      }
   },
   render: function() {
     return (
-      this.state.poll ? <Poll poll={this.state.poll} addVote={this.handleVote} deletePoll={this.props.deletePoll} type={this.props.type} allowEdit={this.props.allowEdit} handleNewOption={this.handleNewOption}/> : null
+      this.state.poll ? <Poll poll={this.state.poll} user={this.state.user} addVote={this.handleVote} deletePoll={this.props.deletePoll} type={this.props.type} allowEdit={this.props.allowEdit} handleNewOption={this.handleNewOption}/> : null
     )
   },
   handleVote: function(optionIndex) {

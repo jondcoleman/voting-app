@@ -25,9 +25,11 @@ module.exports = React.createClass({
     })
   },
   componentDidMount: function() {
-    this.setState({
-      type: localSession.checkVotedPoll(this.props.poll._id) ? 'view' : 'vote'
-    })
+    if(this.state.type !== 'user'){
+      this.setState({
+        type: localSession.checkVotedPoll(this.props.poll._id) ? 'view' : 'vote'
+      })
+    }
   },
   render: function() {
     var options = this.props.poll.options.map(function(option, index) {
@@ -56,7 +58,7 @@ module.exports = React.createClass({
             :
             null
             }
-            {this.state.type === 'vote' ?
+            {this.state.type === 'vote' && this.props.user ?
             <form>
               <Input type="text" placeholder={"New Option Name"} required value={this.state.newOption} onChange={this.handleInput}/>
               <Button bsStyle="default" disabled={!this.state.newOption} onClick={this.addNewOption}>Add & Vote for New Option</Button>

@@ -17,7 +17,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <PollList polls={this.state.polls} deletePoll={this.deletePoll} type={'view'} allowEdit={true}/>
+      <PollList polls={this.state.polls} deletePoll={this.deletePoll} type={'user'} allowEdit={true}/>
     )
   },
   deletePoll: function(pollId, index) {

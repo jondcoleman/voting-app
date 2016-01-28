@@ -12,7 +12,7 @@ function PollHandler() {
         console.log(option.optionName)
         return option
       })
-      newOptions.filter(function(option) {
+      newOptions = newOptions.filter(function(option) {
         return option.optionName !== undefined
       })
       console.log(newOptions)
@@ -39,7 +39,7 @@ function PollHandler() {
           optionName: option.optionName,
           votes: 0
         });
-        newPoll.options.filter(function(option) {
+        newPoll.options = newPoll.options.filter(function(option) {
           return option.optionName !== undefined
         })
       });

@@ -19,7 +19,11 @@ module.exports = React.createClass({
   doChartThings: function(){
     var dataset = this.props.poll.options
     var chartLabels = dataset.map(function(item) {
-      return item.optionName;
+      if (item.optionName.length > 20) {
+        return item.optionName.substring(0, 20) + "..."
+      } else {
+        return item.optionName;
+      }
     })
     var chartData = dataset.map(function(item) {
       return item.votes;

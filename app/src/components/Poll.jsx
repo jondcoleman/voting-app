@@ -32,6 +32,7 @@ module.exports = React.createClass({
     }
   },
   render: function() {
+    var pollUrl = encodeURIComponent("Vote! " + window.location.origin + "/#/poll/" + this.props.poll._id)
     var options = this.props.poll.options.map(function(option, index) {
       return (
         <ListGroupItem key={index}>
@@ -79,7 +80,11 @@ module.exports = React.createClass({
             </Col>
           </Row>
         }
-
+        <Row>
+          <Col md={6} mdOffset={3}>
+            <a href={"http://twitter.com/home?status=" + pollUrl} title="Share on Twitter" target="_blank" className="btn btn-twitter"><i className="fa fa-twitter"></i> Tweet</a>
+          </Col>
+        </Row>
       </Grid>
     )
   },
